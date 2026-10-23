@@ -1,42 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, Response
+from datetime import datetime
 
 app = Flask(__name__)
-
-# Main Route pointing to your index.html
-@app.route('/')
-@app.route('/dashboard')
-def dashboard():
-    return render_template('index.html')
-
-@app.route('/grade-evaluator')
-def grade_evaluator():
-    return render_template('grade_evaluator.html')
-
-@app.route('/scholarship')
-def scholarship():
-    return render_template('scholarship.html')
-
-@app.route('/promissory')
-def promissory():
-    return render_template('promissory.html')
-
-@app.route('/records')
-def records():
-    return render_template('records.html')
-
-@app.route('/credits')
-def credits():
-    return render_template('credits.html')
-
-@app.route('/leave')
-def leave():
-    return render_template('leave.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 SAVED_RECORDS = []
 
@@ -50,9 +15,6 @@ DOCUMENT_CHECKLIST = [
 ]
 
 @app.route('/')
-def welcome():
-    return render_template('welcome.html')
-
 @app.route('/dashboard')
 def dashboard():
     return render_template('index.html', records_count=len(SAVED_RECORDS))
@@ -259,7 +221,7 @@ def credits():
 
 @app.route('/leave')
 def leave():
-    return redirect(url_for('welcome'))
+    return redirect(url_for('dashboard'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
