@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portal - Dashboard</title>
+    <style>
+        :root {
+            --au-blue: #002b5c;
+            --au-header-bg: #032b56;
+            --au-green: #008751;
+            --au-border: #d0d7de;
+            --au-bg: #f4f7f9;
+            --card-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --subtext-color: #555555;
+            --card-radius: 6px;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --btn-radius: 4px;
+            --border-style: 1.5px solid var(--au-blue);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--au-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: var(--au-header-bg);
+            border-bottom: 4px solid var(--au-green);
+            padding: 12px 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .navbar a:hover, .navbar a.active { color: #72f2a2; }
+        .navbar a.leave-link { color: #ff9999; }
+
+        .main-container {
+            width: 92%;
+            max-width: 750px;
+            margin: 20px auto 30px auto;
+            background-color: var(--card-bg);
+            padding: 24px 18px;
+            border-radius: var(--card-radius);
+            border: var(--border-style);
+            box-shadow: var(--card-shadow);
+        }
+
+        .portal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .portal-header h1 {
+            color: var(--au-blue);
+            font-size: 22px;
+            font-weight: 800;
+            margin: 0 0 6px 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .portal-header p {
+            color: var(--subtext-color);
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .card {
+            border: var(--border-style);
+            border-radius: var(--card-radius);
+            padding: 12px;
+            background-color: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 190px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .card.centered-card {
+            grid-column: 1 / -1;
+            justify-self: center;
+            width: calc(50% - 8px);
+            align-items: center;
+            text-align: center;
+        }
+
+        .card.centered-card > div {
+            width: 100%;
+        }
+
+        .card-header-box {
+            background-color: var(--au-header-bg);
+            color: #ffffff;
+            padding: 10px 12px;
+            border-radius: var(--card-radius);
+            margin-bottom: 12px;
+        }
+
+        .card-header-box h2 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .card-body-text {
+            color: var(--subtext-color);
+            font-size: 12px;
+            line-height: 1.45;
+            margin: 0 0 16px 0;
+        }
+
+        .btn-card {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--au-green);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: var(--btn-radius);
+            width: fit-content;
+        }
+
+        .btn-card:hover { background-color: #006b3f; }
+
+        .portal-footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--subtext-color);
+            border-top: 1px solid var(--au-border);
+            padding-top: 16px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 650px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .card.centered-card {
+                grid-column: 1 / -1;
+                width: calc(50% - 6px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="/dashboard" class="active">Dashboard</a>
+        <a href="/grade-evaluator">Grade & GPA Evaluator</a>
+        <a href="/scholarship">Scholarship Quest</a>
+        <a href="/promissory">Promissory Note</a>
+        <a href="/records">Saved Records</a>
+        <a href="/credits">Credits</a>
+        <a href="/leave" class="leave-link">Exit Portal</a>
+    </div>
+
+    <div class="main-container">
+        <div class="portal-header">
+            <h1>Araullo University Portal</h1>
+            <p>Student Grade Evaluation & Scholarship Tracker</p>
+        </div>
+
+        <div class="grid-container">
+            <div class="card">
+                <div>
+                    <div class="card-header-box">
+                        <h2>Grade & GPA Evaluator</h2>
+                    </div>
+                    <p class="card-body-text">Input dynamic subject grades to calculate your general weighted average, GPA scale, and honor status.</p>
+                </div>
+                <a href="/grade-evaluator" class="btn-card">Open Evaluator &rarr;</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-header-box">
+                        <h2>Scholarship Quest</h2>
+                    </div>
+                    <p class="card-body-text">Track your scholarship application status, required document checklist, and discount tiers.</p>
+                </div>
+                <a href="/scholarship" class="btn-card">Open Scholarship &rarr;</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-header-box">
+                        <h2>Promissory Note</h2>
+                    </div>
+                    <p class="card-body-text">Apply for tuition fee promissory coverage, balance calculation, and dean approvals.</p>
+                </div>
+                <a href="/promissory" class="btn-card">Open Promissory &rarr;</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-header-box">
+                        <h2>Saved Records</h2>
+                    </div>
+                    <p class="card-body-text">View all previously calculated student evaluations and export text report files.</p>
+                </div>
+                <a href="/records" class="btn-card">View Records ({{ records_count }}) &rarr;</a>
+            </div>
+
+            <div class="card centered-card">
+                <div>
+                    <div class="card-header-box">
+                        <h2>Credits</h2>
+                    </div>
+                    <p class="card-body-text">View project developer team information, development team roles, and technology specifications.</p>
+                </div>
+                <a href="/credits" class="btn-card">View Credits &rarr;</a>
+            </div>
+        </div>
+
+        <div class="portal-footer">
+            Araullo University Academic Lab Project &bull; Beta V1.0
+        </div>
+    </div>
+
+</body>
+</html>
