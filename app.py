@@ -1,11 +1,15 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
-# Add this route to catch favicon requests
-@app.route('/favicon.ico')
-def favicon():
-    return '', 204  # Sends an empty success response instead of crashing
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# Add all your other routes here...
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 SAVED_RECORDS = []
 
