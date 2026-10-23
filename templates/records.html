@@ -53,7 +53,7 @@
 
         .container {
             width: 92%;
-            max-width: 800px;
+            max-width: 900px;
             margin: 20px auto 40px auto;
             background: var(--card-bg);
             padding: 24px 18px;
@@ -106,11 +106,17 @@
 
         .btn-clear:hover { background-color: #c9302c; }
 
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
         .records-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
             margin-top: 15px;
+            min-width: 650px;
         }
 
         .records-table th {
@@ -126,6 +132,19 @@
         }
 
         .records-table tr:nth-child(even) { background-color: rgba(0,0,0,0.02); }
+
+        .btn-edit {
+            background-color: var(--au-green);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .btn-edit:hover { background-color: #006a3e; }
 
         .empty-msg {
             text-align: center;
@@ -164,36 +183,42 @@
         </div>
 
         {% if records %}
-        <table class="records-table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th>Student ID</th>
-                    <th>Student Name</th>
-                    <th>Status</th>
-                    <th>Grant / Details</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in records %}
-                <tr>
-                    <td>{{ item.date_recorded }}</td>
-                    <td>{{ item.type }}</td>
-                    <td><b>{{ item.student_id }}</b></td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.status }}</td>
-                    <td style="color: var(--au-green); font-weight: bold;">
-                        {% if item.total_grant > 0 %}
-                        ₱{{ "{:,.2f}".format(item.total_grant) }}
-                        {% else %}
-                        {{ item.remark }}
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="records-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Student ID</th>
+                        <th>Student Name</th>
+                        <th>Status</th>
+                        <th>Grant / Details</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in records %}
+                    <tr>
+                        <td>{{ item.date_recorded }}</td>
+                        <td>{{ item.type }}</td>
+                        <td><b>{{ item.student_id }}</b></td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.status }}</td>
+                        <td style="color: var(--au-green); font-weight: bold;">
+                            {% if item.total_grant > 0 %}
+                            ₱{{ "{:,.2f}".format(item.total_grant) }}
+                            {% else %}
+                            {{ item.remark }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="/edit-record/{{ loop.index0 }}" class="btn-edit">Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% else %}
         <p class="empty-msg">No evaluation records saved in this session yet. Complete a Grade or Scholarship evaluation to populate this archive.</p>
         {% endif %}
