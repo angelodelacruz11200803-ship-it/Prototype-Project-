@@ -3,226 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saved Records - Araullo University</title>
+    <title>Edit Record - Araullo University</title>
     <style>
-        :root {
-            --au-blue: #002b5c;
-            --au-header-bg: #032b56;
-            --au-green: #008751;
-            --au-border: #d0d7de;
-            --au-bg: #f4f7f9;
-            --card-bg: #ffffff;
-            --text-color: #1a1a1a;
-            --subtext-color: #555555;
-            --card-radius: 6px;
-            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --border-style: 1px solid var(--au-border);
-            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        * { box-sizing: border-box; }
-
-        body {
-            font-family: var(--font-main);
-            background-color: var(--au-bg);
-            margin: 0;
-            padding: 0;
-            color: var(--text-color);
-        }
-
-        .navbar {
-            background-color: var(--au-header-bg);
-            border-bottom: 4px solid var(--au-green);
-            padding: 12px 10px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .navbar a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: bold;
-            white-space: nowrap;
-        }
-
-        .navbar a:hover, .navbar a.active { color: #72f2a2; }
-
-        .container {
-            width: 92%;
-            max-width: 900px;
-            margin: 20px auto 40px auto;
-            background: var(--card-bg);
-            padding: 24px 18px;
-            border-radius: var(--card-radius);
-            border: var(--border-style);
-            box-shadow: var(--card-shadow);
-        }
-
-        .header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--au-green);
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-        }
-
-        h2.page-title {
-            color: var(--au-blue);
-            font-size: 20px;
-            margin: 0;
-        }
-
-        .btn-group-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-export {
-            background-color: var(--au-blue);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .btn-export:hover { background-color: var(--au-header-bg); }
-
-        .btn-clear {
-            background-color: #d9534f;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .btn-clear:hover { background-color: #c9302c; }
-
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        .records-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            margin-top: 15px;
-            min-width: 650px;
-        }
-
-        .records-table th {
-            background-color: var(--au-header-bg);
-            color: white;
-            padding: 10px;
-            text-align: left;
-        }
-
-        .records-table td {
-            padding: 10px;
-            border: 1px solid var(--au-border);
-        }
-
-        .records-table tr:nth-child(even) { background-color: rgba(0,0,0,0.02); }
-
-        .btn-edit {
-            background-color: var(--au-green);
-            color: white;
-            padding: 6px 10px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: bold;
-            display: inline-block;
-        }
-
-        .btn-edit:hover { background-color: #006a3e; }
-
-        .empty-msg {
-            text-align: center;
-            color: var(--subtext-color);
-            padding: 20px 0;
-        }
-
-        @media (max-width: 650px) {
-            .container { width: 95%; padding: 16px 12px; }
-            .header-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .records-table { font-size: 11px; }
-            .records-table th, .records-table td { padding: 6px; }
-        }
+        body { font-family: Arial, sans-serif; margin: 0; background: #f4f7f6; color: #333; }
+        .header { background: #032b56; color: white; padding: 15px; text-align: center; }
+        .container { padding: 20px; max-width: 600px; margin: auto; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .btn { background: #008751; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; }
+        .btn-back { background: #555; margin-right: 5px; }
     </style>
 </head>
 <body>
-
-    <div class="navbar">
-        <a href="/dashboard">Dashboard</a>
-        <a href="/grade-evaluator">Grade & GPA Evaluator</a>
-        <a href="/scholarship">Scholarship Quest</a>
-        <a href="/promissory">Promissory Note</a>
-        <a href="/records" class="active">Saved Records</a>
-        <a href="/credits">Credits</a>
+    <div class="header">
+        <h2>Edit Saved Record</h2>
     </div>
-
     <div class="container">
-        <div class="header-row">
-            <h2 class="page-title">Saved Student Evaluations Archive</h2>
-            {% if records %}
-            <div class="btn-group-actions">
-                <a href="/export-records" class="btn-export">⬇ Download (.TXT)</a>
-                <a href="/clear-records" class="btn-clear" onclick="return confirm('Are you sure you want to clear all saved records?');">🗑 Clear Records</a>
-            </div>
-            {% endif %}
+        <div class="card">
+            <form method="POST">
+                <div class="form-group">
+                    <label>Student Name:</label>
+                    <input type="text" name="name" value="{{ record.name }}" required>
+                </div>
+                <div class="form-group">
+                    <label>Student ID:</label>
+                    <input type="text" name="student_id" value="{{ record.student_id }}" required>
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <input type="text" name="status" value="{{ record.status }}" required>
+                </div>
+                <div class="form-group">
+                    <label>Details / Remarks:</label>
+                    <textarea name="remark" rows="3">{{ record.remark }}</textarea>
+                </div>
+                <a href="/records" class="btn btn-back">Cancel</a>
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
         </div>
-
-        {% if records %}
-        <div class="table-responsive">
-            <table class="records-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th>Student ID</th>
-                        <th>Student Name</th>
-                        <th>Status</th>
-                        <th>Grant / Details</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in records %}
-                    <tr>
-                        <td>{{ item.date_recorded }}</td>
-                        <td>{{ item.type }}</td>
-                        <td><b>{{ item.student_id }}</b></td>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.status }}</td>
-                        <td style="color: var(--au-green); font-weight: bold;">
-                            {% if item.total_grant > 0 %}
-                            ₱{{ "{:,.2f}".format(item.total_grant) }}
-                            {% else %}
-                            {{ item.remark }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="/edit-record/{{ loop.index0 }}" class="btn-edit">Edit</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% else %}
-        <p class="empty-msg">No evaluation records saved in this session yet. Complete a Grade or Scholarship evaluation to populate this archive.</p>
-        {% endif %}
     </div>
-
 </body>
 </html>
