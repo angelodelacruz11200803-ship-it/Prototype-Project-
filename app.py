@@ -1,11 +1,7 @@
-from flask import Flask
+from flask import Flask, render_template, request, redirect, url_for, Response
+from datetime import datetime
 
 app = Flask(__name__)
-
-# Add this route to catch favicon requests
-@app.route('/favicon.ico')
-def favicon():
-    return '', 204  # Sends an empty success response instead of crashing
 
 SAVED_RECORDS = []
 
@@ -19,9 +15,6 @@ DOCUMENT_CHECKLIST = [
 ]
 
 @app.route('/')
-def welcome():
-    return render_template('welcome.html')
-
 @app.route('/dashboard')
 def dashboard():
     return render_template('index.html', records_count=len(SAVED_RECORDS))
@@ -64,17 +57,11 @@ def grade_evaluator():
                 highest_str = "--"
                 lowest_str = "--"
 
-            # Honor Standing Title
-            if gwa >= 95:
-                status = "Highest Honor"
-            elif gwa >= 90:
-                status = "High Honor"
-            elif gwa >= 85:
-                status = "Honor"
-            else:
-                status = "No Honor"
+            if gwa >= 95: status = "Highest Honor"
+            elif gwa >= 90: status = "High Honor"
+            elif gwa >= 85: status = "Honor"
+            else: status = "No Honor"
 
-            # Equivalent Scale GPA
             if gwa >= 97: gpa_scale = "1.00"
             elif gwa >= 94: gpa_scale = "1.25"
             elif gwa >= 91: gpa_scale = "1.50"
@@ -85,13 +72,6 @@ def grade_evaluator():
             elif gwa >= 76: gpa_scale = "2.75"
             elif gwa >= 75: gpa_scale = "3.00"
             else: gpa_scale = "5.00 (Failed)"
-
-            # Parity check
-            round_gwa = round(gwa)
-            round_avg = round(simple_avg)
-            gwa_parity = "Even" if round_gwa % 2 == 0 else "Odd"
-            avg_parity = "Even" if round_avg % 2 == 0 else "Odd"
-            parity_str = f"GWA is {gwa_parity} ({round_gwa}), Avg is {avg_parity} ({round_avg})"
 
             evaluation = {
                 "date_recorded": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
@@ -106,14 +86,12 @@ def grade_evaluator():
                 "status": status,
                 "highest": highest_str,
                 "lowest": lowest_str,
-                "parity": parity_str,
-                "total_grant": 0.00,
                 "remark": f"GWA: {round(gwa, 2)}% | Units: {total_units}"
             }
 
             SAVED_RECORDS.append(evaluation)
         except Exception as e:
-            print("Error evaluating grades:", e)
+            print("Error:", e)
 
     return render_template('grade_evaluator.html', evaluation=evaluation)
 
@@ -124,7 +102,6 @@ def scholarship():
 
     if request.method == 'POST':
         apply_choice = request.form.get('apply_choice', 'No')
-
         if apply_choice == 'Yes':
             name = request.form.get('name', '').strip()
             student_id = request.form.get('student_id', '').strip()
@@ -136,7 +113,7 @@ def scholarship():
                 current_grade = float(request.form.get('current_grade', 0.0))
                 days_left = int(request.form.get('days_left', 0))
             except ValueError:
-                error = "Please enter valid numeric values for grades and days left."
+                error = "Please enter valid numeric values."
                 return render_template('scholarship.html', docs=DOCUMENT_CHECKLIST, error=error)
 
             submitted_docs = request.form.getlist('submitted_docs')
@@ -148,16 +125,13 @@ def scholarship():
 
             if is_grade_met and is_docs_complete:
                 status = "Qualified / Approved"
-                total_grant = 15000.00
                 remark = "All requirements satisfied. Full scholarship discount applied."
             elif is_grade_met and not is_docs_complete:
                 status = "Conditional Pending Documents"
-                total_grant = 7500.00
                 remark = f"Grade requirement met. Please submit remaining {total_docs - doc_count} document(s) within {days_left} day(s)."
             else:
                 status = "Disqualified"
-                total_grant = 0.00
-                remark = "General average does not meet minimum required scholarship maintenance percentage."
+                remark = "General average does not meet minimum scholarship maintenance requirement."
 
             result = {
                 "date_recorded": datetime.now().strftime("%Y-%m-%d %I:%M %p"),
@@ -168,7 +142,6 @@ def scholarship():
                 "year": year,
                 "current_grade": current_grade,
                 "status": status,
-                "total_grant": total_grant,
                 "docs_count": doc_count,
                 "total_docs": total_docs,
                 "days_left": days_left,
@@ -190,6 +163,21 @@ def promissory():
 def records():
     return render_template('records.html', records=SAVED_RECORDS)
 
+@app.route('/edit-record/<int:index>', methods=['GET', 'POST'])
+def edit_record(index):
+    if index < 0 or index >= len(SAVED_RECORDS):
+        return redirect(url_for('records'))
+    
+    record = SAVED_RECORDS[index]
+    if request.method == 'POST':
+        record['name'] = request.form.get('name', record.get('name'))
+        record['student_id'] = request.form.get('student_id', record.get('student_id'))
+        record['status'] = request.form.get('status', record.get('status'))
+        record['remark'] = request.form.get('remark', record.get('remark'))
+        return redirect(url_for('records'))
+        
+    return render_template('edit_record.html', record=record, index=index)
+
 @app.route('/clear-records')
 def clear_records():
     SAVED_RECORDS.clear()
@@ -198,29 +186,13 @@ def clear_records():
 @app.route('/export-records')
 def export_records():
     if not SAVED_RECORDS:
-        return "No evaluation records available to export.", 400
+        return "No records to export.", 400
 
-    lines = [
-        "==================================================",
-        " ARAULLO UNIVERSITY - STUDENT ACADEMIC RECORDS",
-        "==================================================\n"
-    ]
-    
+    lines = ["==================================================\n ARAULLO UNIVERSITY - ACADEMIC RECORDS\n==================================================\n"]
     for idx, rec in enumerate(SAVED_RECORDS, 1):
-        lines.append(f"[{idx}] {rec.get('type', 'Record')}")
-        lines.append(f"Date & Time: {rec.get('date_recorded', 'N/A')}")
-        lines.append(f"Student Name: {rec.get('name', 'N/A')}")
-        lines.append(f"Student ID: {rec.get('student_id', 'N/A')}")
-        lines.append(f"Status: {rec.get('status', 'N/A')}")
-        lines.append(f"Grant / GWA Info: {rec.get('remark', 'N/A')}")
-        lines.append("-" * 50 + "\n")
-
-    txt_data = "\n".join(lines)
-    return Response(
-        txt_data,
-        mimetype="text/plain",
-        headers={"Content-Disposition": "attachment;filename=araullo_academic_records.txt"}
-    )
+        lines.append(f"[{idx}] {rec.get('type', 'Record')}\nDate: {rec.get('date_recorded')}\nName: {rec.get('name')}\nID: {rec.get('student_id')}\nStatus: {rec.get('status')}\nDetails: {rec.get('remark')}\n" + "-"*50 + "\n")
+    
+    return Response("\n".join(lines), mimetype="text/plain", headers={"Content-Disposition": "attachment;filename=records.txt"})
 
 @app.route('/credits')
 def credits():
@@ -228,7 +200,7 @@ def credits():
 
 @app.route('/leave')
 def leave():
-    return redirect(url_for('welcome'))
+    return redirect(url_for('dashboard'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
