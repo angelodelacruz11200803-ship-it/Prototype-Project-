@@ -2,11 +2,38 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
+# Main Route pointing to your index.html
 @app.route('/')
-def home():
+@app.route('/dashboard')
+def dashboard():
     return render_template('index.html')
 
-# Add all your other routes here...
+@app.route('/grade-evaluator')
+def grade_evaluator():
+    return render_template('grade_evaluator.html')
+
+@app.route('/scholarship')
+def scholarship():
+    return render_template('scholarship.html')
+
+@app.route('/promissory')
+def promissory():
+    return render_template('promissory.html')
+
+@app.route('/records')
+def records():
+    return render_template('records.html')
+
+@app.route('/credits')
+def credits():
+    return render_template('credits.html')
+
+@app.route('/leave')
+def leave():
+    return render_template('leave.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
