@@ -192,7 +192,7 @@
                         <th>Student ID</th>
                         <th>Student Name</th>
                         <th>Status</th>
-                        <th>Grant / Details</th>
+                        <th>Details / Remarks</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -204,13 +204,7 @@
                         <td><b>{{ item.student_id }}</b></td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.status }}</td>
-                        <td style="color: var(--au-green); font-weight: bold;">
-                            {% if item.total_grant > 0 %}
-                            ₱{{ "{:,.2f}".format(item.total_grant) }}
-                            {% else %}
-                            {{ item.remark }}
-                            {% endif %}
-                        </td>
+                        <td>{{ item.remark }}</td>
                         <td>
                             <a href="/edit-record/{{ loop.index0 }}" class="btn-edit">Edit</a>
                         </td>
