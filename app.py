@@ -1,7 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, Response
-from datetime import datetime
+from flask import Flask
 
 app = Flask(__name__)
+
+# Add this route to catch favicon requests
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204  # Sends an empty success response instead of crashing
 
 SAVED_RECORDS = []
 
@@ -15,6 +19,9 @@ DOCUMENT_CHECKLIST = [
 ]
 
 @app.route('/')
+def welcome():
+    return render_template('welcome.html')
+
 @app.route('/dashboard')
 def dashboard():
     return render_template('index.html', records_count=len(SAVED_RECORDS))
@@ -221,7 +228,7 @@ def credits():
 
 @app.route('/leave')
 def leave():
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('welcome'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
