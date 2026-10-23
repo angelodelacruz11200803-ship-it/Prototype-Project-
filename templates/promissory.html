@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promissory Note - Araullo University</title>
+    <style>
+        :root {
+            --au-blue: #002b5c;
+            --au-header-bg: #032b56;
+            --au-green: #008751;
+            --au-border: #d0d7de;
+            --au-bg: #f4f7f9;
+            --card-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --subtext-color: #555555;
+            --card-radius: 6px;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --btn-radius: 4px;
+            --border-style: 1px solid var(--au-border);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--au-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: var(--au-header-bg);
+            border-bottom: 4px solid var(--au-green);
+            padding: 12px 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .navbar a:hover, .navbar a.active { color: #72f2a2; }
+
+        .container {
+            width: 92%;
+            max-width: 750px;
+            margin: 20px auto 40px auto;
+            background: var(--card-bg);
+            padding: 24px 18px;
+            border-radius: var(--card-radius);
+            border: var(--border-style);
+            box-shadow: var(--card-shadow);
+        }
+
+        h2.page-title {
+            color: var(--au-blue);
+            border-bottom: 3px solid var(--au-green);
+            padding-bottom: 8px;
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        .steps-box {
+            background-color: rgba(0, 43, 92, 0.04);
+            border: 1px solid var(--au-blue);
+            border-radius: var(--card-radius);
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .steps-box h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: var(--au-blue);
+            text-transform: uppercase;
+        }
+
+        .step-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+
+        .step-num {
+            background-color: var(--au-blue);
+            color: white;
+            font-weight: bold;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .form-group { margin-bottom: 15px; }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: var(--au-blue);
+        }
+
+        input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 9px;
+            border: 1px solid var(--au-border);
+            border-radius: var(--btn-radius);
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .btn-submit {
+            background-color: var(--au-green);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: var(--btn-radius);
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .note-card {
+            background-color: rgba(0, 135, 81, 0.08);
+            border: 1px solid var(--au-green);
+            border-left: 5px solid var(--au-green);
+            padding: 18px;
+            border-radius: var(--card-radius);
+            margin-top: 20px;
+        }
+
+        @media (max-width: 650px) {
+            .container { width: 95%; padding: 16px 12px; }
+            .form-row { flex-direction: column; gap: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/grade-evaluator">Grade & GPA Evaluator</a>
+        <a href="/scholarship">Scholarship Quest</a>
+        <a href="/promissory" class="active">Promissory Note</a>
+        <a href="/records">Saved Records</a>
+        <a href="/credits">Credits</a>
+    </div>
+
+    <div class="container">
+        <h2 class="page-title">Tuition Fee Promissory Note Application</h2>
+
+        <div class="steps-box">
+            <h3>Standard Promissory Note Process</h3>
+            <div class="step-list">
+                <div class="step-item">
+                    <span class="step-num">1</span>
+                    <span>Promissory note (filled information)</span>
+                </div>
+                <div class="step-item">
+                    <span class="step-num">2</span>
+                    <span>Payment in cashier</span>
+                </div>
+                <div class="step-item">
+                    <span class="step-num">3</span>
+                    <span>Dean's signature</span>
+                </div>
+                <div class="step-item">
+                    <span class="step-num">4</span>
+                    <span>Cashier (they will keep the promissory note)</span>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST">
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                    <label>Student Full Name:</label>
+                    <input type="text" name="student_name" required placeholder="e.g. Dela Cruz, Angelo F.">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Student ID Number:</label>
+                    <input type="text" name="student_id" required placeholder="e.g. 2026-00123">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" style="flex: 1;">
+                    <label> Extension fee (₱):</label>
+                    <input type="number" step="0.01" name="balance" required placeholder="e.g. 1,000.00">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Promised Payment Date:</label>
+                    <input type="text" name="promised_date" required placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Reason for Extension Request:</label>
+                <textarea name="reason" rows="3" required placeholder="State personal or financial reasons..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="checkbox" name="dean_approval" required style="width: auto;">
+                    Verified and endorsed for College Dean Signature Validation
+                </label>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Promissory Application</button>
+        </form>
+
+        {% if note_submitted %}
+        <div class="note-card">
+            <h3 style="margin-top:0; color: var(--au-blue);">Promissory Note Receipt & Next Steps</h3>
+            <p><b>Status:</b> Information Form Completed</p>
+            <p><b>Reference ID:</b> PN-2026-7842</p>
+            <p><b>Required Submission Workflow:</b></p>
+            <ul>
+                <li>Promissory note (filled information) - <i>Completed</i></li>
+                <li>Payment in cashier</li>
+                <li>Dean's signature</li>
+                <li>Cashier (they will keep the promissory note)</li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

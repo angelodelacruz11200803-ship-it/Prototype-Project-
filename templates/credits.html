@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credits - Araullo University</title>
+    <style>
+        :root {
+            --au-blue: #002b5c;
+            --au-header-bg: #032b56;
+            --au-green: #008751;
+            --au-border: #d0d7de;
+            --au-bg: #f4f7f9;
+            --card-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --subtext-color: #555555;
+            --card-radius: 6px;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --border-style: 1px solid var(--au-border);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--au-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: var(--au-header-bg);
+            border-bottom: 4px solid var(--au-green);
+            padding: 12px 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .navbar a:hover, .navbar a.active { color: #72f2a2; }
+
+        .container {
+            width: 92%;
+            max-width: 750px;
+            margin: 20px auto 40px auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: var(--card-radius);
+            border: var(--border-style);
+            box-shadow: var(--card-shadow);
+        }
+
+        h2.page-title {
+            color: var(--au-blue);
+            border-bottom: 3px solid var(--au-green);
+            padding-bottom: 8px;
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        .table-card {
+            border: var(--border-style);
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            margin-top: 15px;
+        }
+
+        .credits-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            background-color: var(--card-bg);
+        }
+
+        .credits-table thead tr {
+            background-color: var(--au-header-bg);
+            color: #ffffff;
+        }
+
+        .credits-table th {
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        .credits-table th.col-icon {
+            width: 45px;
+            text-align: center;
+            border-right: 1px solid rgba(255, 255, 255, 2.0);
+        }
+
+        .credits-table td {
+            padding: 12px;
+            border: 1px solid var(--au-border);
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .credits-table td.col-num {
+            text-align: center;
+            font-weight: 700;
+            width: 45px;
+        }
+
+        .tech-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .pill {
+            background-color: var(--au-header-bg);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 650px) {
+            .container { width: 95%; padding: 16px 12px; }
+            .credits-table { font-size: 12px; }
+            .credits-table th, .credits-table td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/grade-evaluator">Grade & GPA Evaluator</a>
+        <a href="/scholarship">Scholarship Quest</a>
+        <a href="/promissory">Promissory Note</a>
+        <a href="/records">Saved Records</a>
+        <a href="/credits" class="active">Credits</a>
+    </div>
+
+    <div class="container">
+        <h2 class="page-title">System Credits & Acknowledgments</h2>
+
+        <h3 style="color: var(--au-blue); margin-bottom: 8px;">Project Development Team</h3>            <div class="table-card">
+            <table class="credits-table">
+                <thead>
+                    <tr>
+                        <th class="col-icon">💻</th>
+                        <th>The Developers</th>
+                        <th>The Roles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-num">1</td>
+                        <td>Dela Cruz, Angelo F.</td>
+                            <td> • Project  Manager</td>
+                    </tr>
+                    <tr>
+                        <td class="col-num">2</td>
+                        <td>Abul, Krishiela L.</td>
+                            <td> • Designer</td>
+                    </tr>
+                    <tr>
+                        <td class="col-num">3</td>
+                        <td>Cuyao, Micah S.</td>
+                            <td> • Programmer</td>
+                    </tr>
+                    <tr>
+                        <td class="col-num">4</td>
+                        <td>Tabiolo, Rachelle T.</td>
+                            <td> • Tester </td>"
+                    </tr>
+                    <tr>
+                        <td class="col-num">5</td>
+                        <td>Yamson, Gil Lorenz R.</td>
+                            <td> • Tester </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 style="color: var(--au-blue); margin-top: 25px; margin-bottom: 8px;">Technology Used</h3>
+        <div class="tech-pills">
+            <span class="pill">Python</span>
+            <span class="pill">Flask</span>
+            <span class="pill">HTML</span>
+            <span class="pill">CSS</span>
+            <span class="pill">JavaScript</span>
+        </div>
+    </div>
+
+</body>
+</html>

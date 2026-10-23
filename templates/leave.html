@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portal - Exit</title>
+    <style>
+        :root {
+            --au-blue: #002d62;
+            --au-green: #008751;
+            --au-light-bg: #f4f7fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--au-blue) 0%, #001a3a 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .exit-card {
+            background-color: #ffffff;
+            width: 90%;
+            max-width: 450px;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            border-top: 6px solid var(--au-green);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+        }
+
+        h2 {
+            color: var(--au-blue);
+            margin-top: 0;
+            font-size: 22px;
+        }
+
+        p {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .btn-return {
+            display: inline-block;
+            background-color: var(--au-green);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-return:hover {
+            background-color: #006b40;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="exit-card">
+        <h2>👋 Session Ended</h2>
+        <p>You have logged out of the Araullano University Academic Portal.</p>
+        <a href="/" class="btn-return">↺ Return to Portal Entrance</a>
+    </div>
+
+</body>
+</html>

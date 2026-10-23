@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade & GPA Evaluator - Araullo University</title>
+    <style>
+        :root {
+            --au-blue: #002b5c;
+            --au-header-bg: #032b56;
+            --au-green: #008751;
+            --au-border: #d0d7de;
+            --au-bg: #f4f7f9;
+            --card-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --subtext-color: #555555;
+            --card-radius: 6px;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --btn-radius: 4px;
+            --border-style: 1px solid var(--au-border);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--au-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: var(--au-header-bg);
+            border-bottom: 4px solid var(--au-green);
+            padding: 12px 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .navbar a:hover, .navbar a.active { color: #72f2a2; }
+
+        .container {
+            width: 92%;
+            max-width: 750px;
+            margin: 20px auto 40px auto;
+            background: var(--card-bg);
+            padding: 24px 18px;
+            border-radius: var(--card-radius);
+            border: var(--border-style);
+            box-shadow: var(--card-shadow);
+        }
+
+        h2.page-title {
+            color: var(--au-blue);
+            border-bottom: 3px solid var(--au-green);
+            padding-bottom: 8px;
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        .subject-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 9px;
+            border: 1px solid var(--au-border);
+            border-radius: var(--btn-radius);
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .btn-add, .btn-remove, .btn-submit {
+            font-weight: bold;
+            border: none;
+            border-radius: var(--btn-radius);
+            cursor: pointer;
+        }
+
+        .btn-add {
+            background-color: var(--au-blue);
+            color: white;
+            padding: 8px 14px;
+            margin-bottom: 15px;
+        }
+
+        .btn-remove {
+            background-color: #d9534f;
+            color: white;
+            padding: 8px 12px;
+            flex-shrink: 0;
+        }
+
+        .btn-submit {
+            background-color: var(--au-green);
+            color: white;
+            padding: 12px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .result-box {
+            background-color: rgba(0, 135, 81, 0.08);
+            border: 1px solid var(--au-green);
+            padding: 18px;
+            border-radius: var(--card-radius);
+            margin-top: 20px;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 650px) {
+            .container { width: 95%; padding: 16px 12px; }
+            .subject-row { flex-wrap: wrap; }
+            .subject-row input[name="subject_name"] { flex: 100% !important; margin-bottom: 5px; }
+            .subject-row input[name="units"],
+            .subject-row input[name="grade"] { flex: 1 !important; }
+            .result-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/grade-evaluator" class="active">Grade & GPA Evaluator</a>
+        <a href="/scholarship">Scholarship Quest</a>
+        <a href="/promissory">Promissory Note</a>
+        <a href="/records">Saved Records</a>
+        <a href="/credits">Credits</a>
+    </div>
+
+    <div class="container">
+        <h2 class="page-title">General Weighted Average (GWA) & GPA Evaluator</h2>
+
+        <form id="evaluator-form" action="/grade-evaluator" method="POST">
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <input type="text" name="student_name" placeholder="Student Full Name" required style="flex: 2;">
+                <input type="text" name="student_id" placeholder="Student ID No." required style="flex: 1;">
+            </div>
+
+            <div id="subject-list">
+                <div class="subject-row">
+                    <input type="text" name="subject_name" placeholder="Subject Name" style="flex: 2;" required>
+                    <input type="number" name="units" placeholder="Units" style="flex: 1;" min="1" max="6" required>
+                    <input type="number" step="0.01" name="grade" placeholder="Grade (%)" style="flex: 1;" required>
+                    <button type="button" class="btn-remove" onclick="removeRow(this)">X</button>
+                </div>
+            </div>
+
+            <button type="button" class="btn-add" onclick="addRow()">+ Add Subject</button>
+            <button type="submit" class="btn-submit">Calculate & Save Weighted GPA</button>
+        </form>
+
+        {% if evaluation %}
+        <div id="result-display" class="result-box">
+            <h3 style="margin-top:0; color: var(--au-blue);">Evaluation Summary</h3>
+            
+            <div class="result-grid">
+                <p><b>Total Subjects:</b> <span>{{ evaluation.total_subjects }}</span></p>
+                <p><b>Total Academic Units:</b> <span>{{ evaluation.total_units }}</span></p>
+                <p><b>Simple Average:</b> <span>{{ evaluation.simple_avg }}%</span></p>
+                <p><b>Weighted GWA:</b> <span style="font-weight:bold; color: var(--au-green);">{{ evaluation.gwa }}%</span></p>
+                <p><b>Equivalent Scale GPA:</b> <span style="font-weight:bold;">{{ evaluation.gpa_scale }}</span></p>
+                <p><b>Honor Standing Title:</b> <span style="font-weight:bold;">{{ evaluation.status }}</span></p>
+                <p><b>Highest Grade:</b> <span style="color: var(--au-green);">{{ evaluation.highest }}</span></p>
+                <p><b>Lowest Grade:</b> <span style="color: #d9534f;">{{ evaluation.lowest }}</span></p>
+                <p><b>Average Parity:</b> <span>{{ evaluation.parity }}</span></p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function addRow() {
+            const container = document.getElementById('subject-list');
+            const row = document.createElement('div');
+            row.className = 'subject-row';
+
+            const inputSub = document.createElement('input');
+            inputSub.type = 'text';
+            inputSub.name = 'subject_name';
+            inputSub.placeholder = 'Subject Name';
+            inputSub.style.flex = '2';
+            inputSub.required = true;
+
+            const inputUnits = document.createElement('input');
+            inputUnits.type = 'number';
+            inputUnits.name = 'units';
+            inputUnits.placeholder = 'Units';
+            inputUnits.style.flex = '1';
+            inputUnits.min = '1';
+            inputUnits.max = '6';
+            inputUnits.required = true;
+
+            const inputGrade = document.createElement('input');
+            inputGrade.type = 'number';
+            inputGrade.step = '0.01';
+            inputGrade.name = 'grade';
+            inputGrade.placeholder = 'Grade (%)';
+            inputGrade.style.flex = '1';
+            inputGrade.required = true;
+
+            const btnRemove = document.createElement('button');
+            btnRemove.type = 'button';
+            btnRemove.className = 'btn-remove';
+            btnRemove.innerText = 'X';
+            btnRemove.onclick = function() { removeRow(this); };
+
+            row.appendChild(inputSub);
+            row.appendChild(inputUnits);
+            row.appendChild(inputGrade);
+            row.appendChild(btnRemove);
+
+            container.appendChild(row);
+        }
+
+        function removeRow(btn) {
+            const rows = document.querySelectorAll('.subject-row');
+            if (rows.length > 1) {
+                btn.parentElement.remove();
+            }
+        }
+    </script>
+</body>
+</html>

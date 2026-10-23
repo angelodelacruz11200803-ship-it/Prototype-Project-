@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portal - Welcome</title>
+    <style>
+        :root {
+            --au-blue: #002b5c;
+            --au-header-bg: #032b56;
+            --au-green: #008751;
+            --au-border: #d0d7de;
+            --au-bg: #002b5c;
+            --card-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --subtext-color: #555555;
+            --card-radius: 12px;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --btn-radius: 6px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--au-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .welcome-card {
+            width: 88%;
+            max-width: 420px;
+            background-color: var(--card-bg);
+            padding: 36px 24px 30px 24px;
+            border-radius: var(--card-radius);
+            border-top: 6px solid var(--au-green);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+
+        .cap-circle {
+            width: 76px;
+            height: 76px;
+            background-color: #032b56;
+            border: 2px solid var(--au-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+        }
+
+        .cap-circle svg {
+            width: 42px;
+            height: 42px;
+            fill: #f5b041;
+        }
+
+        .welcome-card h1 {
+            color: var(--au-blue);
+            font-size: 20px;
+            font-weight: 800;
+            margin: 0 0 4px 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .welcome-card h2 {
+            color: var(--au-green);
+            font-size: 12px;
+            font-weight: 700;
+            margin: 0 0 16px 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .welcome-card p {
+            color: var(--subtext-color);
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0 0 24px 0;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-main {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: var(--btn-radius);
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        .btn-enter {
+            background-color: var(--au-green);
+            color: #ffffff;
+            border: 1px solid var(--au-green);
+        }
+
+        .btn-enter:hover {
+            background-color: #006b3f;
+        }
+
+        .btn-exit {
+            background-color: #ffffff;
+            color: var(--au-blue);
+            border: 1.5px solid var(--au-blue);
+        }
+
+        .btn-exit:hover {
+            background-color: #f4f7f9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="welcome-card">
+        <div class="cap-circle">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4l7 3.82 7-3.82v-4L12 17l-7-3.82z"/>
+            </svg>
+        </div>
+
+        <h1>ACADEMIC PORTAL</h1>
+        <h2>Araullo University Portal</h2>
+
+        <p>Welcome to the official Araullo University Academic Evaluation and Scholarship Tracker.</p>
+
+        <div class="btn-group">
+            <a href="/dashboard" class="btn-main btn-enter">ENTER PORTAL</a>
+            <a href="https://google.com" class="btn-main btn-exit">EXIT PORTAL</a>
+        </div>
+    </div>
+
+</body>
+</html>
