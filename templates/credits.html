@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saved Records - Araullo University</title>
+    <title>Scholarship Quest - Araullo University</title>
     <style>
         :root {
             --au-blue: #002b5c;
@@ -16,6 +16,7 @@
             --subtext-color: #555555;
             --card-radius: 6px;
             --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --btn-radius: 4px;
             --border-style: 1px solid var(--au-border);
             --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
@@ -53,7 +54,7 @@
 
         .container {
             width: 92%;
-            max-width: 900px;
+            max-width: 750px;
             margin: 20px auto 40px auto;
             background: var(--card-bg);
             padding: 24px 18px;
@@ -62,101 +63,88 @@
             box-shadow: var(--card-shadow);
         }
 
-        .header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--au-green);
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-        }
-
         h2.page-title {
             color: var(--au-blue);
+            border-bottom: 3px solid var(--au-green);
+            padding-bottom: 8px;
             font-size: 20px;
-            margin: 0;
+            margin-top: 0;
         }
 
-        .btn-group-actions {
+        .form-group { margin-bottom: 15px; }
+
+        .form-row {
             display: flex;
-            gap: 8px;
+            gap: 15px;
         }
 
-        .btn-export {
-            background-color: var(--au-blue);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 12px;
+        label {
+            display: block;
             font-weight: bold;
-        }
-
-        .btn-export:hover { background-color: var(--au-header-bg); }
-
-        .btn-clear {
-            background-color: #d9534f;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .btn-clear:hover { background-color: #c9302c; }
-
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        .records-table {
-            width: 100%;
-            border-collapse: collapse;
             font-size: 13px;
-            margin-top: 15px;
-            min-width: 650px;
+            margin-bottom: 5px;
+            color: var(--au-blue);
         }
 
-        .records-table th {
-            background-color: var(--au-header-bg);
-            color: white;
-            padding: 10px;
-            text-align: left;
-        }
-
-        .records-table td {
-            padding: 10px;
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 9px;
             border: 1px solid var(--au-border);
+            border-radius: var(--btn-radius);
+            box-sizing: border-box;
         }
 
-        .records-table tr:nth-child(even) { background-color: rgba(0,0,0,0.02); }
+        .checkbox-group {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--au-border);
+            padding: 15px;
+            border-radius: var(--card-radius);
+        }
 
-        .btn-edit {
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .checkbox-item label {
+            margin-bottom: 0;
+            font-weight: normal;
+            color: var(--text-color);
+        }
+
+        .btn-submit {
             background-color: var(--au-green);
             color: white;
-            padding: 6px 10px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 11px;
+            border: none;
+            padding: 12px;
             font-weight: bold;
-            display: inline-block;
+            border-radius: var(--btn-radius);
+            cursor: pointer;
+            width: 100%;
         }
 
-        .btn-edit:hover { background-color: #006a3e; }
+        .result-box {
+            background-color: rgba(0, 135, 81, 0.08);
+            border: 1px solid var(--au-green);
+            padding: 18px;
+            border-radius: var(--card-radius);
+            margin-top: 20px;
+        }
 
-        .empty-msg {
-            text-align: center;
-            color: var(--subtext-color);
-            padding: 20px 0;
+        .error-box {
+            background-color: rgba(217, 83, 79, 0.1);
+            border: 1px solid #d9534f;
+            color: #d9534f;
+            padding: 12px;
+            border-radius: var(--card-radius);
+            margin-bottom: 15px;
         }
 
         @media (max-width: 650px) {
             .container { width: 95%; padding: 16px 12px; }
-            .header-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .records-table { font-size: 11px; }
-            .records-table th, .records-table td { padding: 6px; }
+            .form-row { flex-direction: column; gap: 0; }
         }
     </style>
 </head>
@@ -165,64 +153,122 @@
     <div class="navbar">
         <a href="/dashboard">Dashboard</a>
         <a href="/grade-evaluator">Grade & GPA Evaluator</a>
-        <a href="/scholarship">Scholarship Quest</a>
+        <a href="/scholarship" class="active">Scholarship Quest</a>
         <a href="/promissory">Promissory Note</a>
-        <a href="/records" class="active">Saved Records</a>
+        <a href="/records">Saved Records</a>
         <a href="/credits">Credits</a>
     </div>
 
     <div class="container">
-        <div class="header-row">
-            <h2 class="page-title">Saved Student Evaluations Archive</h2>
-            {% if records %}
-            <div class="btn-group-actions">
-                <a href="/export-records" class="btn-export">⬇ Download (.TXT)</a>
-                <a href="/clear-records" class="btn-clear" onclick="return confirm('Are you sure you want to clear all saved records?');">🗑 Clear Records</a>
-            </div>
-            {% endif %}
-        </div>
+        <h2 class="page-title">Scholarship Requirements & Qualification Evaluation</h2>
 
-        {% if records %}
-        <div class="table-responsive">
-            <table class="records-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th>Student ID</th>
-                        <th>Student Name</th>
-                        <th>Status</th>
-                        <th>Grant / Details</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in records %}
-                    <tr>
-                        <td>{{ item.date_recorded }}</td>
-                        <td>{{ item.type }}</td>
-                        <td><b>{{ item.student_id }}</b></td>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.status }}</td>
-                        <td style="color: var(--au-green); font-weight: bold;">
-                            {% if item.total_grant > 0 %}
-                            ₱{{ "{:,.2f}".format(item.total_grant) }}
-                            {% else %}
-                            {{ item.remark }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="/edit-record/{{ loop.index0 }}" class="btn-edit">Edit</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        {% if error %}
+        <div class="error-box">
+            <b>Error:</b> {{ error }}
         </div>
-        {% else %}
-        <p class="empty-msg">No evaluation records saved in this session yet. Complete a Grade or Scholarship evaluation to populate this archive.</p>
+        {% endif %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label>Do you wish to apply for Scholarship Renewal / Maintenance?</label>
+                <select name="apply_choice" id="apply_choice">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div id="application_fields">
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label>Student Full Name:</label>
+                        <input type="text" name="name" class="req-field" placeholder="e.g. Dela Cruz, Angelo F.">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Student ID Number:</label>
+                        <input type="text" name="student_id" class="req-field" placeholder="e.g. 2026-00123">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label>College / University Name:</label>
+                        <input type="text" name="school" class="req-field" placeholder="Araullo University">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Year Level:</label>
+                        <select name="year">
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Grade Maintenance Requirement (%):</label>
+                        <input type="number" step="0.1" name="grade_maintenance" value="85.0" class="req-field">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Current General Average (%):</label>
+                        <input type="number" step="0.1" name="current_grade" placeholder="e.g. 88.5" class="req-field">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Days Remaining Until Submission Deadline:</label>
+                    <input type="number" name="days_left" placeholder="e.g. 5" class="req-field">
+                </div>
+
+                <div class="form-group">
+                    <label>Submitted Required Documents Checklist:</label>
+                    <div class="checkbox-group">
+                        {% for doc in docs %}
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="submitted_docs" value="{{ doc }}" id="doc_{{ loop.index }}">
+                            <label for="doc_{{ loop.index }}">{{ doc }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Scholarship Evaluation</button>
+        </form>
+
+        {% if result %}
+        <div class="result-box">
+            <h3 style="margin-top: 0; color: var(--au-blue);">Scholarship Evaluation Result</h3>
+            <p><b>Date Recorded:</b> {{ result.date_recorded }}</p>
+            <p><b>Student Name:</b> {{ result.name }}</p>
+            <p><b>Student ID:</b> {{ result.student_id }}</p>
+            <p><b>Status:</b> {{ result.status }}</p>
+            <p><b>Documents Submitted:</b> {{ result.docs_count }} of {{ result.total_docs }}</p>
+            <p><b>Days Left Before Deadline:</b> {{ result.days_left }} day(s)</p>
+            <p><b>Remark:</b> {{ result.remark }}</p>
+        </div>
         {% endif %}
     </div>
+
+    <script>
+        const applySelect = document.getElementById('apply_choice');
+        const fieldsContainer = document.getElementById('application_fields');
+        const requiredInputs = document.querySelectorAll('.req-field');
+
+        function toggleScholarshipFields() {
+            if (applySelect.value === 'Yes') {
+                fieldsContainer.style.display = 'block';
+                requiredInputs.forEach(input => input.setAttribute('required', 'required'));
+            } else {
+                fieldsContainer.style.display = 'none';
+                requiredInputs.forEach(input => input.removeAttribute('required'));
+            }
+        }
+
+        applySelect.addEventListener('change', toggleScholarshipFields);
+        toggleScholarshipFields();
+    </script>
 
 </body>
 </html>
